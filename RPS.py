@@ -3,7 +3,6 @@
 #3 = Scissors
 
 from random import *
-from tkinter import *
 
 #Save file is made into a list, Each line is an item
 f = open('Hard.txt','r')
@@ -31,10 +30,10 @@ def getMode(memoryList):
     for x in memoryList:
         if x == 1:
             countrock = countrock + 1
-        elif x ==2:
-            countscissors = countscissors +1
+        elif x == 2:
+            countpaper = countpaper + 1
         else:
-            countpaper = countpaper +1
+            countscissors = countscissors + 1
     modeList = [countrock,countscissors, countpaper]
     return(modeList.index(max(modeList)))
 
@@ -43,10 +42,10 @@ def getMode(memoryList):
 def predictEasy(mem):
         #mem is a list of previous guesses
         #tempguess equals random or most choosen option
-        if len(mem) ==0:
+        if len(mem) == 0:
             tempguess = randint(1,3)
         else:
-            tempguess = getMode(mem)+1
+            tempguess = getMode(mem) + 1
         return(tempguess)
 
 
@@ -54,9 +53,9 @@ def predictHard(last):
     #where prev is a string, first digit is users last input, second digit is cpu last input
     find = 'move:' + str(last)
     index = readFile.index(find)
-    r = readFile[index+1][2:]
-    p = readFile[index+2][2:]
-    s = readFile[index+3][2:]
+    r = readFile[index + 1][2:]
+    p = readFile[index + 2][2:]
+    s = readFile[index + 3][2:]
     r = int(r)
     p = int(p)
     s = int(s)
@@ -64,13 +63,13 @@ def predictHard(last):
         return(1)
     elif p > r and p > s:
         return(2)
-    elif s>r and s>p:
+    elif s > r and s > p:
         return(3)
-    elif r==p==s:
+    elif r == p == s:
         return(randint(1,3))
     elif r == p:
         return(randint(1,2))
-    elif p ==s:
+    elif p == s:
         return(randint(2,3))
     elif r == s:
         return(int(choice('13')))
@@ -90,10 +89,10 @@ def convert(inp):
 def aiMove(tg):
         #input: prediction,  output: chosen move
         #change prediction to AI throw
-        if int(tg)== 3:
+        if int(tg) == 3:
             guess = 1
         else:
-            guess = int(tg)+1
+            guess = int(tg) + 1
         return(guess)
 
 #determining who wins
@@ -127,18 +126,18 @@ def printResult(c,g,ws):
 def recordResult(l,c):
     find = "move:" + str(l)
     index = readFile.index(find)
-    if c ==1:
-        a = readFile[index+1][2:]
+    if c == 1:
+        a = readFile[index + 1][2:]
         b = int(a) + 1
-        readFile[index+1] = 'r:' + str(b)
-    elif c ==2:
+        readFile[index + 1] = 'r:' + str(b)
+    elif c == 2:
         a = readFile[index+2][2:]
         b = int(a) + 1
-        readFile[index+2] = 'p:' + str(b)
-    elif c ==3:
-        a = readFile[index+3][2:]
+        readFile[index + 2] = 'p:' + str(b)
+    elif c == 3:
+        a = readFile[index + 3][2:]
         b = int(a) + 1
-        readFile[index+3] = 's:' + str(b)
+        readFile[index + 3] = 's:' + str(b)
 
 #Gets and Sets Rounds Played
 def getRoundsPlayed():
@@ -204,7 +203,7 @@ def play():
             pre = predictEasy(memory)
         elif difficulty == 'hard':
             pre = predictHard(last)
-        elif difficulty== 'Impossible!':
+        elif difficulty == 'Impossible!':
             pre = convert(strchoice)
 
 
@@ -250,4 +249,3 @@ def play():
             f1.write('\n')
         f1.close()
 play()
-
